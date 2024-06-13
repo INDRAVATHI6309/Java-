@@ -1,0 +1,80 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class TaskListApp {
+    private ArrayList<String> tasks;
+
+    public TaskListApp() {
+        tasks = new ArrayList<>();
+    }
+
+    public void displayMenu() {
+        System.out.println("Task List Application");
+        System.out.println("1. Add Task");
+        System.out.println("2. View Tasks");
+        System.out.println("3. Mark Task as Completed");
+        System.out.println("4. Exit");
+        System.out.print("Enter your choice: ");
+    }
+
+    public void addTask(String task) {
+        tasks.add(task);
+        System.out.println("Task added successfully.");
+    }
+
+    public void viewTasks() {
+        if (tasks.isEmpty()) {
+            System.out.println("Task list is empty.");
+        } else {
+            System.out.println("Tasks:");
+            for (int i = 0; i < tasks.size(); i++) {
+                System.out.println((i+1) + ". " + tasks.get(i));
+            }
+        }
+    }
+
+    public void markTaskCompleted(int index) {
+        if (index >= 1 && index <= tasks.size()) {
+            tasks.remove(index - 1);
+            System.out.println("Task marked as completed.");
+        } else {
+            System.out.println("Invalid task index.");
+        }
+    }
+
+    public static void main(String[] args) {
+        TaskListApp taskList = new TaskListApp();
+        Scanner scanner = new Scanner(System.in);
+        int choice = 0;
+
+        while (choice != 4) {
+            taskList.displayMenu();
+            choice = scanner.nextInt();
+            scanner.nextLine(); // Consume newline character after integer input
+
+            switch (choice) {
+                case 1:
+                    System.out.print("Enter task to add: ");
+                    String newTask = scanner.nextLine();
+                    taskList.addTask(newTask);
+                    break;
+                case 2:
+                    taskList.viewTasks();
+                    break;
+                case 3:
+                    System.out.print("Enter index of task to mark as completed: ");
+                    int index = scanner.nextInt();
+                    taskList.markTaskCompleted(index);
+                    break;
+                case 4:
+                    System.out.println("Exiting...");
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please enter a number between 1 and 4.");
+                    break;
+            }
+        }
+
+        scanner.close();
+    }
+}
